@@ -1,7 +1,6 @@
 # Satpam
 -----
-Satpam is a wrapper for some nodejs validator libraries, I made `Satpam` so it's easy to create
-custom validator with parameters and custom validation messages.
+Satpam is a wrapper for validator libraries.
 
 [![Build Status](https://travis-ci.org/sendyhalim/satpam.svg)](https://travis-ci.org/sendyhalim/satpam)
 [![npm version](https://badge.fury.io/js/satpam.svg)](https://badge.fury.io/js/satpam)
@@ -14,6 +13,8 @@ npm install satpam --save
 
 
 ## Quick Usage
+NOTE: All of `satpam` public APIs are automatically curried, yay!
+
 ```js
 import satpam from 'satpam';
 
