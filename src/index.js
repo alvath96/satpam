@@ -258,7 +258,18 @@ class Validator {
  * that is cloned from the global validations and validation messages.
  * @returns Validator - Satpam validator instance
  */
-exports.create = () => new Validator();
+exports.create = () => {
+  const validator = new Validator();
+
+  _.each(function (property, propertyName) {
+    if (_.isFunction(property)) {
+      validator[propertyName] = _.curry(property);
+    }
+  }, validator);
+
+  return validator;
+};
+
 
 /**
  * @example
@@ -272,10 +283,10 @@ exports.create = () => new Validator();
  * @param inputObj - Input object to be validated
  * @returns {{result: Boolean, messages: Object}}
  */
-exports.validate = (ruleMapping, inputObj) => {
+exports.validate = _.curry((ruleMapping, inputObj) => {
   const validator = new Validator();
   return validator.validate(ruleMapping, inputObj);
-};
+});
 
 /**
  * Add custom validation the validator instance, it will only affect the
@@ -289,9 +300,9 @@ exports.validate = (ruleMapping, inputObj) => {
  * @param ruleName
  * @param validationFunction
  */
-exports.addCustomValidation = (ruleName, validationFunction) => {
+exports.addCustomValidation = _.curry((ruleName, validationFunction) => {
   validation[ruleName] = validationFunction;
-};
+});
 
 /**
  * Set validation message for the given ruleName, it will only affect the
@@ -305,9 +316,9 @@ exports.addCustomValidation = (ruleName, validationFunction) => {
  * @param ruleName
  * @param message
  */
-exports.setValidationMessage = (ruleName, message) => {
+exports.setValidationMessage = _.curry((ruleName, message) => {
   validationMessages[ruleName] = message;
-};
+});
 
 /**
  * The global validation object that contains all of the validation rules
